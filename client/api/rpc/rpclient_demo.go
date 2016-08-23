@@ -22,14 +22,31 @@ func main() {
 	defer conn.Close()
 
 	client := types.NewPublicAPIClient(conn)
-	request := types.PodInfoRequest{
-		PodID: "pod-zpIOTSAjmM",
+/*	request := types.PodInfoRequest{
+		PodID: "pod-UDPChNpcCq",
 	}
 	response, err := client.PodInfo(context.Background(), &request)
 	if err != nil {
 		fmt.Printf("Get PodInfo error: %v", err)
 		os.Exit(1)
+	}*/
+/*	request := types.PodListRequest{
+		PodID:	"",
+		VmID:	"",
 	}
+	response, err := client.PodList(context.Background(), &request)
+	if err != nil {
+		fmt.Printf("Get PodList error: %v", err)
+		os.Exit(1)
+	}*/
 
+	request := types.PodRemoveRequest{
+		PodID: "pod-UDPChNpcCq",
+	}
+	response, err := client.PodRemove(context.Background(), &request)
+	if err != nil {
+		fmt.Printf("Get PodRemove error: %v", err)
+		os.Exit(1)
+	}
 	fmt.Printf("Got response: %v", response)
 }

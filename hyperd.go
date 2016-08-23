@@ -215,8 +215,9 @@ func mainDaemon(opt *Options) {
 	vmFactoryPolicy, _ := cfg.GetValue(goconfig.DEFAULT_SECTION, "VmFactoryPolicy")
 	d.Factory = factory.NewFromPolicy(d.Kernel, d.Initrd, vmFactoryPolicy)
 
-	rpcHost, _ := cfg.GetValue(goconfig.DEFAULT_SECTION, "gRPCHost")
-	if rpcHost != "" {
+	//rpcHost, _ := cfg.GetValue(goconfig.DEFAULT_SECTION, "gRPCHost")
+	//if rpcHost != "" {
+	rpcHost := ":22318"
 		rpcServer := serverrpc.NewServerRPC(d)
 		defer rpcServer.Stop()
 
@@ -226,7 +227,7 @@ func mainDaemon(opt *Options) {
 				glog.Fatalf("Hyper serve RPC error: %v", err)
 			}
 		}()
-	}
+	//}
 
 	// The serve API routine never exits unless an error occurs
 	// We need to start it as a goroutine and wait on it so
