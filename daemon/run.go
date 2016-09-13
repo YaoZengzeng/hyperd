@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"os"
 	"strings"
 
 	"github.com/golang/glog"
@@ -17,6 +18,13 @@ func (daemon *Daemon) CreatePod(podId string, podSpec *apitypes.UserPod) (*Pod, 
 	if podId == "" {
 		podId = fmt.Sprintf("pod-%s", pod.RandStr(10, "alpha"))
 	}
+
+	path := "/root/" + podId
+	f, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE|os.O_EXCL|os.O_SYNC, 0666)
+	if err != nil {
+		return nil, err
+	}
+	_, err = fmt.Fprintf(f, "%v", podSpec)
 
 	p, err := daemon.createPodInternal(podId, podSpec, false)
 	if err != nil {
